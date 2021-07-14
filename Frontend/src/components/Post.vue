@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="mt-3 mb-2 container_top">
-    <b-avatar src="https://placekitten.com/300/300" id="img_avatar"></b-avatar>
+    <b-avatar src="https://img2.freepng.fr/20180802/pyj/kisspng-the-binding-of-isaac-afterbirth-plus-video-games-file-isaac-app-png-binding-of-isaac-rebirth-wik-5b62fdf83ac776.4622285615332142002408.jpg" id="img_avatar"></b-avatar>
     <h2>{{title}}</h2>
   </div>
     <b-card class="mb-2 mx-auto card_container">

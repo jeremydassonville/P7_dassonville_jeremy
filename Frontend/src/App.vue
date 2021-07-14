@@ -5,15 +5,13 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-navbar-brand href="/">Groupomania</b-navbar-brand>
-        <b-nav-item to="/signup">Sign up</b-nav-item>
-        <b-nav-item to="/login">Log in</b-nav-item>
-
+        
         <!-- Navbar dropdowns -->
         <b-nav-item-dropdown text="User" right>
           <b-dropdown-item to="/account">Account</b-dropdown-item>
         </b-nav-item-dropdown>
         
-        <b-nav-item id="uploadButton">
+        <b-nav-item id="uploadButton" v-if="test == 0">
           <b-button to="/upload" variant="primary">upload</b-button>
         </b-nav-item>
 
@@ -23,6 +21,19 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  data: function () {
+    return{
+      test: 0
+    }
+  },
+  methods: {
+
+  }
+}
+</script>
 
 <style>
 #app {

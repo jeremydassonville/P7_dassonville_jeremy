@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="account">
     <Account/>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import Account from '@/components/Account.vue'
 
 export default {
-  name: 'Home',
+  name: 'Account',
   components: {
     Account
   }

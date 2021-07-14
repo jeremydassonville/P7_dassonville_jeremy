@@ -9,7 +9,7 @@
 import Upload from '@/components/Upload.vue'
 
 export default {
-  name: 'Home',
+  name: 'Upload',
   components: {
     Upload
   }
