@@ -7,13 +7,13 @@
         <b-navbar-brand to="/wall">Groupomania</b-navbar-brand>
         
         <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="User" right>
-          <b-dropdown-item to="/account">Account</b-dropdown-item>
+        <b-nav-item-dropdown text="Utilisateur" right>
+          <b-dropdown-item to="/account">Compte</b-dropdown-item>
           <b-dropdown-item to="/">deconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
         
         <b-nav-item id="uploadButton" v-if="test == 0">
-          <b-button to="/upload" variant="primary">upload</b-button>
+          <b-button to="/upload" variant="primary">Publier</b-button>
         </b-nav-item>
 
       </b-navbar-nav>
