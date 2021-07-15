@@ -22,11 +22,11 @@
             <b-form-input type="password" v-model="password" placeholder="Entrer votre mot de passe"></b-form-input>
         </b-form-group>
         <b-button type="submit" variant="primary" class="mt-3" @click="login()" v-if="mode == 'login'">
-            <span v-if="status == 'loading'">Connexion en cours...</span>
+            <span v-if="status == 'loading' ">Connexion en cours...</span>
             <span v-else>Connexion</span>
             </b-button>
         <b-button type="submit" variant="primary" class="mt-3" @click="createAccount()" v-else>
-            <span v-if="status == 'loading'">Création en cours...</span>
+            <span v-if="status == 'loading' ">Création en cours...</span>
             <span v-else>Créer votre compte</span></b-button>
 
     </b-card>
@@ -38,6 +38,7 @@
 import { mapState } from 'vuex';
 
 export default {
+    name: 'Home',
     data: function() {
        return{
            mode: 'login',
@@ -45,11 +46,10 @@ export default {
            name: '',
            surname: '',
            password: '',
-           status: ''
        } 
     },
     computed: {
-    ...mapState([status])
+        ...mapState(['status'])
     },
     methods: {
         switchToCreateAccount: function() {
