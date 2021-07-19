@@ -2,7 +2,7 @@
   <div id="app">
 
   <div>
-    <b-navbar type="dark" variant="dark">
+    <b-navbar class="nav" type="dark">
       <b-navbar-nav>
         <b-navbar-brand to="/wall">Groupomania</b-navbar-brand>
         
@@ -64,5 +64,12 @@ export default {
   top: 0;
 }
 
+.nav{
+  background-color: #081E43;
+}
+
+#test{
+  background-color: #D15159;
+}
 
 </style>

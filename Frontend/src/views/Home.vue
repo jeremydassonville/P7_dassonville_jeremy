@@ -13,10 +13,10 @@
             <b-form-input type="email" v-model="email" placeholder="Entrer votre adresse mail" class="mt-3"></b-form-input>
         </b-form-group>
         <b-form-group label="Nom:"  class="mt-3" v-if="mode == 'create'">
-            <b-form-input placeholder="Entrer votre nom" v-model="name" ></b-form-input>
+            <b-form-input placeholder="Entrer votre nom" v-model="surname" ></b-form-input>
         </b-form-group>
         <b-form-group label="Prénom:" class="mt-3" v-if="mode == 'create'">
-            <b-form-input placeholder="Entrer votre prénom" v-model="surname"></b-form-input>
+            <b-form-input placeholder="Entrer votre prénom" v-model="name"></b-form-input>
         </b-form-group>
         <b-form-group label="Mot de passe:" class="mt-3">
             <b-form-input type="password" v-model="password" placeholder="Entrer votre mot de passe"></b-form-input>

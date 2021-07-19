@@ -2,6 +2,7 @@
 
 <div>
     <div class="card__container">
+        <h1>Vos informations</h1>
         <b-card class="w-50 mx-auto mt-3 shadow p-3 mb-5 bg-white rounded">
             <b-avatar src="https://img2.freepng.fr/20180802/pyj/kisspng-the-binding-of-isaac-afterbirth-plus-video-games-file-isaac-app-png-binding-of-isaac-rebirth-wik-5b62fdf83ac776.4622285615332142002408.jpg" size="12rem"></b-avatar>
             <div>
@@ -43,7 +44,7 @@ export default {
 <style scoped>
 
 .card__container{
-    margin-top: 150px;
+    margin-top: 100px;
 }
 
 .button__account{
