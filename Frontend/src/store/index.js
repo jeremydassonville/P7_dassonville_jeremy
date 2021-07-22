@@ -17,6 +17,12 @@ export default new Vuex.Store({
       userId: -1,
       token: '',
     },
+    userInfos: {
+      email: '',
+      name: '',
+      surname: '',
+      isAdmin: '',
+    },
   },
   mutations: {
     setStatus: function(state, status){
@@ -24,34 +30,56 @@ export default new Vuex.Store({
     },
     logUser: function(state,user){
       state.user = user;
-    }
+    },
+    saveUserInfos: function(state, [email, name, surname, isAdmin]) {
+      state.userInfos.email = email;
+      state.userInfos.name = name;
+      state.userInfos.surname = surname;
+      state.userInfos.isAdmin = isAdmin;
+    },
   },
   actions: {
     login: ({commit}, userInfos) => {
       commit('setStatus', 'loading');
-      instance.post('user/login', userInfos)
-      .then(function (response) {
-        commit('setStatus', '');
-        console.log(status);
-        commit('logUser', response.data)
-        console.log(response);
-      })
-      .catch(function (error) {
-        commit('setStatus', 'error_login');
-        console.log(error);
+      return new Promise((resolve, reject) => {
+        instance.post('user/login', userInfos)
+        .then(function (response) {
+          console.log('store');
+          commit('setStatus', '');
+          commit('logUser', response.data);
+          localStorage.setItem('token',response.data.token)
+          resolve(response);
+        })
+        .catch(function (error) {
+          commit('setStatus', 'error_login');
+          reject(error);
+        });
       });
     },
     createAccount: ({commit}, userInfos) => {
       commit('setStatus', 'loading');
-      instance.post('user/signup', userInfos)
-      .then(function (response) {
-        commit('setStatus', 'created');
-        console.log(response);
-      })
-      .catch(function (error) {
-        commit('setStatus', 'error_create');
-        console.log(error);
+      return new Promise((resolve, reject) => {
+        instance.post('user/signup', userInfos)
+        .then(function (response) {
+          commit('setStatus', 'created');
+          resolve(response);
+        })
+        .catch(function (error) {
+          commit('setStatus', 'error_create');
+          reject(error);
+        });
       });
-    }
+    },
+    getUserInfos: (context) =>{
+      instance.get('user/me', {
+        headers:{
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      })
+      .then(response =>{
+        context.commit('saveUserInfos',[response.data.email, response.data.name, response.data.surname, response.data.isAdmin])
+      })
+      .catch()
+    },
   }
 })

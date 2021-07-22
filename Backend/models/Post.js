@@ -12,4 +12,12 @@ const Post = sequelize.define("Post", {
     },
 });
 
+Post.associate = function(models) {
+    models.Post.belongsTo(models.User, {
+        foreignKey: {
+            allowNull: false
+        }
+    });
+};
+
 module.exports = Post;

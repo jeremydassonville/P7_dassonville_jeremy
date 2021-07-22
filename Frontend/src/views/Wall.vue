@@ -73,6 +73,14 @@ export default {
   name: 'Wall',
   components: {
     Post
+  },
+  mounted: function() {
+    console.log(this.$store.state.user);
+    if (this.$store.state.user.userId == -1){
+      this.$router.push('/');
+    } else {
+      this.$router.push('/Wall');
+    }
   }
 }
 </script>

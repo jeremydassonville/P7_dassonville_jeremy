@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+let utils = require('../utils/jwtUtils.js');
 
 
 exports.signup = (req, res) => {
@@ -21,7 +22,9 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req,res) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({
+        where: { email: req.body.email }
+    })
     .then(user => {
         if (!user){
             return res.status(401).json({ error: 'Utilisateur non trouvé !'});
@@ -32,9 +35,9 @@ exports.login = (req,res) => {
                     return res.status(401).json({ error: 'Mot de passe incorrect !'});
                 }
                 res.status(200).json({
-                    userId: user._id,
+                    userId: user.id,
                     token: jwt.sign(
-                        {userId: user._id},
+                        {userId: user.id},
                         'Secret_Token',
                         { expiresIn: '24h'}
                     )
@@ -43,4 +46,15 @@ exports.login = (req,res) => {
             .catch(error => res.status(500).json({ error }));
     })
     .catch(error => res.status(500).json({ error }));
-}
+};
+
+exports.userAccount = (req, res) => {
+    let id = utils.getUserId(req.headers.authorization)
+    console.log(id);
+    User.findOne({
+        attributes: ['id', 'email', 'name', 'surname', 'isAdmin'],
+        where: { id: id }
+    })
+        .then(user => res.status(200).json(user))
+        .catch(error => res.status(500).json(error))
+};

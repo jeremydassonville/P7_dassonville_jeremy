@@ -4,15 +4,7 @@ const cors = require('cors');
 
 const sequelize = require('./utils/database');
 
-sequelize.sync({force: true})
-.then(result => {
-    console.log(result);
-}).catch((err) => {
-    console.log(err);
-})
-
-
-
+sequelize.sync();
 
 const userRoutes = require('./routes/user.js');
 const postRoutes = require('./routes/post.js')

@@ -64,7 +64,9 @@ export default {
                 email: this.email, 
                 password: this.password,
             })
-            self.$router.push('/wall');
+            .then(() => {
+                self.$router.push('/wall'); 
+            })
         },
         createAccount: function() {
             const self = this;
@@ -74,7 +76,9 @@ export default {
                 surname: this.surname,
                 password: this.password,
             })
-            self.login();
+            .then(() => {
+              self.login();  
+            })
         },
     }
 }

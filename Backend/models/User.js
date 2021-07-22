@@ -30,4 +30,8 @@ const User = sequelize.define("User", {
     },
 });
 
+User.associate = function(models){
+    models.User.hasMany(models.Post)
+};
+
 module.exports = User;
