@@ -80,7 +80,7 @@ export default {
               self.login();  
             })
         },
-    }
+    },
 }
 </script>
 

@@ -37,6 +37,10 @@ export default new Vuex.Store({
       state.userInfos.surname = surname;
       state.userInfos.isAdmin = isAdmin;
     },
+    createPost: function(state, [content, attachement]) {
+      state.contentPost.content = content;
+      state.contentPost.attachement = attachement;
+    },
   },
   actions: {
     login: ({commit}, userInfos) => {
@@ -70,7 +74,7 @@ export default new Vuex.Store({
         });
       });
     },
-    getUserInfos: (context) =>{
+    getUserInfos: (context) => {
       instance.get('user/me', {
         headers:{
           Authorization: "Bearer " + localStorage.getItem("token")

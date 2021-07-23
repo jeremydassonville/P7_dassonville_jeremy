@@ -12,6 +12,13 @@ export default {
   name: 'Upload',
   components: {
     CreatePost
+  },
+  mounted: function() {
+    if(localStorage.token == undefined || localStorage.token == null){
+      this.$router.push('/');
+    }else {
+      this.$router.push('/Upload');
+    }
   }
 }
 </script>

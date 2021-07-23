@@ -8,14 +8,15 @@
                 placeholder="Décrivez votre publication..."
                 rows="2"
                 max-rows="6"
+                v-model="content"
             ></b-form-textarea>
             <input class="mt-3" type="file" @change="displayPreviewImg">
             <div id="preview">
-                <img v-if="url" :src="url" class="imgPreview">
+                <img v-if="attachement" :src="attachement" class="imgPreview">
             </div>
             
             
-            <b-button class="mt-3" type="submit" variant="primary">Publier</b-button>
+            <b-button class="mt-3" type="submit" variant="primary" @click="createPost()">Publier</b-button>
         </b-card>
     </div>
 </div>
@@ -24,17 +25,41 @@
 
 
 <script>
+
+const axios = require('axios');
+
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api/'
+})
+
+
 export default {
     name: 'createPost',
     data() {
         return{
-            url: null,
+            content: '',
+            attachement: '',
         }
     },
     methods: {
         displayPreviewImg: function(e) {
             const file = e.target.files[0];
-            this.url = URL.createObjectURL(file);
+            this.attachement = URL.createObjectURL(file);
+        },
+        createPost: function(){
+            const contentPost = {
+                content: this.content,
+                attachement: this.attachement,
+            }
+            instance.post("post/create", contentPost, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
+            .then(response => {
+                console.log(response);
+            }) 
+            .catch()
         }
     },
 }

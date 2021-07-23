@@ -12,6 +12,13 @@ export default {
   name: 'Account',
   components: {
     UserInfo
+  },
+  mounted: function() {
+    if(localStorage.token == undefined || localStorage.token == null){
+      this.$router.push('/');
+    }else {
+      this.$router.push('/Account');
+    }
   }
 }
 </script>

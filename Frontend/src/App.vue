@@ -9,7 +9,7 @@
         <!-- Navbar dropdowns -->
         <b-nav-item-dropdown text="Utilisateur" right>
           <b-dropdown-item to="/account">Compte</b-dropdown-item>
-          <b-dropdown-item to="/">deconnexion</b-dropdown-item>
+          <b-dropdown-item @click="disconnectUser()" to="/">deconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
         
         <b-nav-item id="uploadButton" v-if="test == 0">
@@ -31,6 +31,9 @@ export default {
     }
   },
   methods: {
+    disconnectUser: function() {
+      localStorage.clear();
+    }
 
   }
 }
