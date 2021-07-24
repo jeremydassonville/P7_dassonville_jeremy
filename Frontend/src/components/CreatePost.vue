@@ -10,7 +10,7 @@
                 max-rows="6"
                 v-model="content"
             ></b-form-textarea>
-            <input class="mt-3" type="file" @change="displayPreviewImg">
+            <input class="mt-3" type="file" @change="onFileChange">
             <div id="preview">
                 <img v-if="attachement" :src="attachement" class="imgPreview">
             </div>
@@ -42,16 +42,15 @@ export default {
         }
     },
     methods: {
-        displayPreviewImg: function(e) {
-            const file = e.target.files[0];
-            this.attachement = URL.createObjectURL(file);
+        onFileChange: function(e) {
+            this.attachement = e.target.files[0] || e.dataTransfer.files;
         },
         createPost: function(){
-            const contentPost = {
-                content: this.content,
-                attachement: this.attachement,
-            }
-            instance.post("post/create", contentPost, {
+            const fd = new FormData();
+            fd.append("inputFile", this.attachement);
+            fd.append("content", this.content);
+            console.log(fd)
+            instance.post("post/create", fd, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }

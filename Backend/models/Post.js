@@ -1,5 +1,6 @@
 const  Sequelize  = require("sequelize");
 const sequelize = require("../utils/database");
+const User = require ("../models/User");
 
 const Post = sequelize.define("Post", {
     content: {
@@ -12,12 +13,5 @@ const Post = sequelize.define("Post", {
     },
 });
 
-Post.associate = function(models) {
-    models.Post.belongsTo(models.User, {
-        foreignKey: {
-            allowNull: false
-        }
-    });
-};
 
 module.exports = Post;

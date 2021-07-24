@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <CreatePost />
-    <Post title="ma publication !" img="https://i.picsum.photos/id/20/400/400.jpg?hmac=A7YmXnzxu9K5utXf6B0jErut4ApRwfhKMuPwLRWY-Wk"/>
+    <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" @infosPost="setInfos" />
    
     
 
@@ -11,7 +10,7 @@
 <script>
 // @ is an alias to /src
 import Post from '@/components/Post.vue'
-import CreatePost from '@/components/CreatePost.vue'
+
 
 const axios = require('axios');
 const instance = axios.create({
@@ -20,15 +19,22 @@ const instance = axios.create({
 
 export default {
   name: 'Wall',
+  data() {
+    return {
+      allPosts: []
+    }
+  },
   components: {
     Post,
-    CreatePost
+  },
+  methods: {
+    setInfos(payload) {
+      this.post = payload.post
+    }
   },
   mounted: function() {
     if(localStorage.token == undefined || localStorage.token == null){
       this.$router.push('/');
-    }else {
-      this.$router.push('/Wall');
     }
     instance.get('post/', {
       headers: {
@@ -36,7 +42,8 @@ export default {
       }
     })
     .then(response =>{
-      console.log(response);
+      this.allPosts = response.data;
+      console.log(this.allPosts)
     })
     .catch(error => {
       console.log(error);

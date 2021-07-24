@@ -11,9 +11,9 @@ exports.create = (req,res) => {
     .then(user => {
         let content = {
             content: req.body.content,
-            attachement: req.body.attachement,
+            attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         };
-        console.log(content);
+        console.log(req.file);
         Post.create({
             content: content.content,
             attachement: content.attachement,
@@ -33,16 +33,17 @@ exports.getAllPost = (req, res) => {
     Post.findAll({
         include: [{
             model: User,
-            attributes: ['username']
+            attributes: ['name', 'surname']
         }],
         order: [['createdAt', 'DESC']]
     })
         .then(posts => {
-            if (post.length > null) {
+        console.log(posts);
+            if (posts.length > null) {
                 res.status(200).json(posts)
             } else {
                 res.status(404).json({ error: 'Pas de post à afficher' })
             }
         })
-        .catch(error => res.status(500).json(error));
+        .catch(error => res.status(500).json(error + ''));
 }   
