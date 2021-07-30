@@ -33,7 +33,7 @@ exports.getAllPost = (req, res) => {
     Post.findAll({
         include: [{
             model: User,
-            attributes: ['name', 'surname']
+            attributes: ['name', 'surname', 'id']
         }],
         order: [['createdAt', 'DESC']]
     })
@@ -45,5 +45,65 @@ exports.getAllPost = (req, res) => {
                 res.status(404).json({ error: 'Pas de post à afficher' })
             }
         })
-        .catch(error => res.status(500).json(error + ''));
-}   
+        .catch(error => res.status(500).json(error));
+}
+
+exports.getOnePost = (req, res) => {
+    let id = req.query.id;
+    console.log(req.query.id);
+    Post.findOne({
+        attributes: ['content','attachement', 'UserId', 'id'],
+        where: {id: id}
+    })
+    .then(postFind => {
+        User.findOne({
+            attributes: ['name', 'surname',],
+            where: {id: postFind.UserId}
+        })
+        .then(User => {
+            let postComplet = {
+                User,
+                attachement: postFind.attachement,
+                content: postFind.content,
+                id: postFind.id
+            }
+            console.log(postComplet);
+            res.status(200).json(postComplet);
+        })
+        .catch(error => res.status(500).json(error));
+        
+    }) 
+    .catch(error => res.status(500).json(error));
+
+}
+
+exports.deletePost = (req, res) => {
+    let userOder = req.body.userIdOrder;
+
+    let id = utils.getUserId(req.headers.authorization)
+    User.findOne({
+        attributes: ['id', 'email', 'name', 'surname', 'isAdmin'],
+        where: { id: id }
+    })
+    .then(user => {
+        if (user){
+            Post.findOne({
+                where: { id: req.body.postId }
+            })
+            .then((postFind) => {
+                const filename = postFind.attachement.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, () => {
+                        Post.destroy({
+                            where: { id: postFind.id }
+                            })
+                            .then(() => res.end())
+                            .catch(err => res.status(500).json(err))
+                        })
+            })
+            .catch(err => res.status(500).json(err))
+        } else {
+            res.status(403).json('Utilisateur non autorisé à supprimer ce post');
+        }
+    })
+    .catch()
+}

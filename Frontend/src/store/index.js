@@ -83,7 +83,9 @@ export default new Vuex.Store({
       .then(response =>{
         context.commit('saveUserInfos',[response.data.email, response.data.name, response.data.surname, response.data.isAdmin])
       })
-      .catch()
+      .catch(error =>{
+        console.log(error)
+      })
     },
   }
 })

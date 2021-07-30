@@ -50,7 +50,7 @@ export default {
             fd.append("inputFile", this.attachement);
             fd.append("content", this.content);
             console.log(fd)
-            instance.post("post/create", fd, {
+            instance.post("post/", fd, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }

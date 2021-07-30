@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" @infosPost="setInfos" />
+    <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" />
    
     
 
@@ -10,6 +10,7 @@
 <script>
 // @ is an alias to /src
 import Post from '@/components/Post.vue'
+
 
 
 const axios = require('axios');
@@ -24,13 +25,12 @@ export default {
       allPosts: []
     }
   },
+  
   components: {
     Post,
   },
   methods: {
-    setInfos(payload) {
-      this.post = payload.post
-    }
+    
   },
   mounted: function() {
     if(localStorage.token == undefined || localStorage.token == null){
