@@ -18,12 +18,6 @@
             </div>
         </a>
       </router-link>
-
-        <div class="button__post mt-4" v-if=" userInfos.name === post.User.name && userInfos.surname === post.User.surname  ">
-            <b-button variant="outline-primary">Modifier</b-button>
-            <b-button variant="danger" @click="deletePost()">Supprimer</b-button>
-        </div>
-
     </b-card>
 </div>
     
@@ -34,10 +28,7 @@
 
 import { mapState } from 'vuex';
 
-const axios = require('axios');
-const instance = axios.create({
-  baseURL: 'http://localhost:3000/api/'
-})
+
 
 export default {
   name: 'Post',
@@ -59,23 +50,6 @@ export default {
         this.$store.dispatch("getUserInfos");
         this.postLink = '/publication/' + this.post.id;
     },
-  methods: {
-    deletePost() {
-      instance.delete("http://localhost:3000/api/post/", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
-          },
-          data: {
-            postId: this.post.id,
-            userIdOrder: this.userInfos.id
-          }
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch(error => console.log(error));
-    },
-  },
 }
 </script>
 
@@ -99,10 +73,7 @@ export default {
   max-width: 40rem;
 }
 
-.button__post{
-    display: flex;
-    justify-content: space-between;
-}
+
 
 .userInfo{
   display: flex;

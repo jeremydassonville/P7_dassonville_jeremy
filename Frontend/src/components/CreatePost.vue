@@ -49,14 +49,16 @@ export default {
             const fd = new FormData();
             fd.append("inputFile", this.attachement);
             fd.append("content", this.content);
-            console.log(fd)
+            fd.append("test", 'test valeur');
+
+
             instance.post("post/", fd, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
             })
-            .then(response => {
-                console.log(response);
+            .then(() => {
+                this.$router.push('/wall');
             }) 
             .catch()
         }

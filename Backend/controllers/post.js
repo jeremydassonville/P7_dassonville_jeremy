@@ -1,8 +1,12 @@
 let Post = require('../models/Post');
 let User = require('../models/User');
 let utils = require('../utils/jwtUtils');
+const fs = require('fs');
 
 exports.create = (req,res) => {
+
+    console.log(req)
+
     let id = utils.getUserId(req.headers.authorization)
     User.findOne({
         attributes: ['id', 'email', 'name', 'surname'],
@@ -13,7 +17,6 @@ exports.create = (req,res) => {
             content: req.body.content,
             attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         };
-        console.log(req.file);
         Post.create({
             content: content.content,
             attachement: content.attachement,
@@ -38,7 +41,6 @@ exports.getAllPost = (req, res) => {
         order: [['createdAt', 'DESC']]
     })
         .then(posts => {
-        console.log(posts);
             if (posts.length > null) {
                 res.status(200).json(posts)
             } else {
@@ -50,14 +52,13 @@ exports.getAllPost = (req, res) => {
 
 exports.getOnePost = (req, res) => {
     let id = req.query.id;
-    console.log(req.query.id);
     Post.findOne({
         attributes: ['content','attachement', 'UserId', 'id'],
         where: {id: id}
     })
     .then(postFind => {
         User.findOne({
-            attributes: ['name', 'surname',],
+            attributes: ['name', 'surname', 'id'],
             where: {id: postFind.UserId}
         })
         .then(User => {
@@ -67,7 +68,6 @@ exports.getOnePost = (req, res) => {
                 content: postFind.content,
                 id: postFind.id
             }
-            console.log(postComplet);
             res.status(200).json(postComplet);
         })
         .catch(error => res.status(500).json(error));
@@ -76,6 +76,41 @@ exports.getOnePost = (req, res) => {
     .catch(error => res.status(500).json(error));
 
 }
+
+exports.modifyPost = (req, res) => {
+
+    console.log(req);
+
+    let userId = req.body.userId;
+    let postId = req.body.postId;
+
+    let id = utils.getUserId(req.headers.authorization);
+    User.findOne({
+        attributes: ['id', 'email', 'name', 'surname', 'isAdmin'],
+        where: { id: id}
+    })
+    .then(user => {
+        if (user && user.id == userId){
+            Post.update(
+                {
+                    content: req.body.content,
+                    attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                },
+                {
+                    where: { id: postId}
+                }
+            )
+            .then((newPost) => {
+                res.status(200).json(newPost)
+            })
+            .catch(error => res.status(500).json(error))
+        }
+        else {
+            res.status(401).json({error: 'Utilisateur non autorisé à modifier le post !'})
+        }
+    })
+    .catch(error => res.status(500).json(error));
+};
 
 exports.deletePost = (req, res) => {
     let userOder = req.body.userIdOrder;

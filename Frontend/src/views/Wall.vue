@@ -1,8 +1,6 @@
 <template>
   <div class="home">
     <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" />
-   
-    
 
   </div>
 </template>
@@ -51,3 +49,10 @@ export default {
   }
 }
 </script>
+
+<style>
+
+#noPublication{
+  margin-top: 50px;
+}
+</style>
