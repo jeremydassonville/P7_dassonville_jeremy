@@ -91,10 +91,23 @@ exports.modifyPost = (req, res) => {
     })
     .then(user => {
         if (user && user.id == userId){
-            Post.update(
-                {
+            if(req.file){
+                Post.update(
+                    {
+                        content: req.body.content,
+                        attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                    },
+                    {
+                        where: { id: postId}
+                    }
+                )
+                .then((newPost) => {
+                    res.status(200).json(newPost)
+                })
+                .catch(error => console.log(error))
+            } else {
+                Post.update({
                     content: req.body.content,
-                    attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
                 },
                 {
                     where: { id: postId}
@@ -104,6 +117,8 @@ exports.modifyPost = (req, res) => {
                 res.status(200).json(newPost)
             })
             .catch(error => res.status(500).json(error))
+            }
+            
         }
         else {
             res.status(401).json({error: 'Utilisateur non autorisé à modifier le post !'})
