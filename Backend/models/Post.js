@@ -1,6 +1,7 @@
 const  Sequelize  = require("sequelize");
 const sequelize = require("../utils/database");
-const User = require ("../models/User");
+const Comment = require("../models/Comment")
+
 
 const Post = sequelize.define("Post", {
     content: {
@@ -13,5 +14,6 @@ const Post = sequelize.define("Post", {
     },
 });
 
+Comment.belongsTo(Post);
 
 module.exports = Post;

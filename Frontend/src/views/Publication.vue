@@ -6,6 +6,11 @@
             <b-button variant="outline-primary" @click="displayModifyPost()">Modifier</b-button>
             <b-button variant="danger" @click="deletePost()">Supprimer</b-button>
         </div>
+        <div class="commentSection">
+        <b-form-textarea
+            id="textarea" v-model="comment" placeholder="Ajouter un commentaire..." rows="3" max-rows="6" class="mx-auto mt-5"></b-form-textarea>
+            <b-button class="mt-2" type="submit" variant="primary" @click="postComment()">Publier</b-button>
+        </div>
 
         <div class="upload_container" v-if="displayModification">
             <h1>Modifier votre publication</h1><br>
@@ -22,8 +27,6 @@
                     <div id="preview">
                         <img v-if="attachement" :src="attachement" class="imgPreview">
                     </div>
-                    
-                    
                     <b-button class="mt-3" type="submit" variant="primary" @click="modifyPost()">Modifier</b-button>
                 </b-card>
         </div>
@@ -61,6 +64,7 @@ export default {
             },
             content: '',
             attachement: '',
+            comment: '',
         }
     },
     components: {
@@ -132,6 +136,18 @@ export default {
             })
             .catch(error => console.log(error));
         },
+        postComment() {
+            const comment = {
+                auteur: '',
+                content: this.comment,
+                postId: this.$route.params.id,
+            }
+            instance.post('comment/', comment, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                } 
+            })   
+        }
     },
 }
 </script>
@@ -147,6 +163,10 @@ export default {
 
 .upload_container{
     margin-top: 50px;
+}
+
+.form-control{
+    width: 640px;
 }
 
 </style>

@@ -32,7 +32,7 @@ const User = sequelize.define("User", {
     },
 });
 
-User.hasMany(Post);
+
 Post.belongsTo(User);
 
 module.exports = User;
