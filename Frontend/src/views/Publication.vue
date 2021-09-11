@@ -12,6 +12,8 @@
             <b-button class="mt-2" type="submit" variant="primary" @click="postComment()">Publier</b-button>
         </div>
 
+        <Comment v-for="comment in allComments" v-bind:key="comment.id" :comment="comment" />
+
         <div class="upload_container" v-if="displayModification">
             <h1>Modifier votre publication</h1><br>
             <div class="card__container w-50 mx-auto">
@@ -42,7 +44,9 @@
 <script>
 
 import Post from '@/components/Post.vue'
+import Comment from '@/components/Comment.vue'
 import { mapState } from 'vuex';
+
 
 
 
@@ -65,13 +69,16 @@ export default {
             content: '',
             attachement: '',
             comment: '',
+            allComments: [],
         }
     },
     components: {
         Post,
+        Comment
     },
     mounted: function() {
        this.displayPost()
+       this.displayComment()
     },
     computed: {
     ...mapState(["userInfos"])
@@ -89,6 +96,23 @@ export default {
             })
             .then(response => {
                 this.post = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        displayComment() {
+            const id = this.$route.params.id
+            instance.get('comment/', {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token") 
+                },
+                params: {
+                    id: id
+                },
+            })
+            .then(response => {
+                this.allComments = response.data;
             })
             .catch(error => {
                 console.log(error);
@@ -146,8 +170,9 @@ export default {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 } 
-            })   
-        }
+            })
+            this.$router.go();
+        },
     },
 }
 </script>

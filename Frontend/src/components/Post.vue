@@ -79,6 +79,8 @@ export default {
 
 .btn-outline-primary:hover{
   background-color: #D15159;
+  border-color: #D15159;
 }
+
 
 </style>

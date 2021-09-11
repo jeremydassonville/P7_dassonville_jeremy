@@ -5,7 +5,6 @@ const fs = require('fs');
 
 exports.create = (req,res) => {
 
-    console.log(req)
 
     let id = utils.getUserId(req.headers.authorization)
     User.findOne({
@@ -79,7 +78,6 @@ exports.getOnePost = (req, res) => {
 
 exports.modifyPost = (req, res) => {
 
-    console.log(req);
 
     let userId = req.body.userId;
     let postId = req.body.postId;

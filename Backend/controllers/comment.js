@@ -2,7 +2,7 @@ let Comment = require("../models/Comment");
 const User = require("../models/User");
 let utils = require('../utils/jwtUtils');
 
-exports.createPost = (req,res) => {
+exports.createComment = (req,res) => {
 
     let id = utils.getUserId(req.headers.authorization)
 
@@ -19,6 +19,25 @@ exports.createPost = (req,res) => {
             content: req.body.content,
             PostId: req.body.postId,
         })
+    })
+    .catch(error => res.status(500).json(error));
+}
+
+exports.getAllComments = (req,res) => {
+
+    let id = req.query.id;
+
+    Comment.findAll({
+        attributes: ['auteur', 'content', 'createdAt'],
+        where: {PostId: id},
+        order: [['createdAt', 'DESC']]
+    })
+    .then(comments => {
+        if (comments.length > null) {
+            res.status(200).json(comments);
+        } else {
+            res.status(404).json({error: 'Pas de commentaire à afficher'});
+        }
     })
     .catch(error => res.status(500).json(error));
 }
