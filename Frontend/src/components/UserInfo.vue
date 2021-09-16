@@ -7,23 +7,23 @@
             <div class="userInfos">
                 <div>
                     <h3>Email:</h3> 
-                    <p id="cardUserInfo">{{userInfos.email}}</p> 
+                    <b-form-input v-model="userEmail" :placeholder="userInfos.email" id="cardUserInfo"></b-form-input>
                 </div>
                 <div>
                     <h3>Nom:</h3> 
-                    <p id="cardUserInfo">{{userInfos.surname}}</p> 
+                    <b-form-input v-model="userSurname" :placeholder="userInfos.surname" id="cardUserInfo"></b-form-input> 
                 </div>
                 <div>
                     <h3>Prénom:</h3> 
-                    <p id="cardUserInfo">{{userInfos.name}}</p> 
+                    <b-form-input v-model="userName" :placeholder="userInfos.name" id="cardUserInfo"></b-form-input> 
                 </div>
             </div>
 
             
 
         <div class="button__account mt-3">
-            <b-button variant="outline-primary">Modifier vos informations</b-button>
-            <b-button variant="danger">Supprimer votre compte</b-button>
+            <b-button variant="outline-primary" @click="modifyUserInfos()">Modifier vos informations</b-button>
+            <b-button variant="danger" @click="deleteUserAccount()">Supprimer votre compte</b-button>
         </div>   
         </b-card>
     </div>
@@ -35,21 +35,67 @@
 
 import { mapState } from 'vuex';
 
+const axios = require('axios');
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api/'
+})
+
 export default {
     name: 'UserInfo',
-
+    data() {
+        return {
+            userEmail: this.userEmail,
+            userSurname: this.userSurname,
+            userName: this.userName,
+        }
+    },
     computed: {
         ...mapState(["userInfos"])
     },
     mounted() {
         this.$store.dispatch("getUserInfos");
-        console.log(this.userInfos);
     },
+    methods: {
+        modifyUserInfos() {
+            const userInfos = {
+                userEmail: this.userEmail,
+                userSurname: this.userSurname,
+                userName: this.userName
+            }
+
+            instance.put("user/", userInfos, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
+            .then(() => {
+                this.$router.go();
+            })
+            .catch(error => console.log(error));
+        },
+        deleteUserAccount() {
+            instance.delete("user/",
+                {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
+            .then(() => {
+                localStorage.clear();
+                this.$router.push('/wall');
+            })
+            .catch(error => console.log(error));
+        }
+    }
 }
 </script>
 
 
 <style scoped>
+
+h3{
+    margin-top: 10px;
+}
 
 .card__container{
     margin-top: 100px;
@@ -65,8 +111,11 @@ export default {
 }
 
 #cardUserInfo{
-    box-shadow: 1px 3px 5px #BA4C54;
     padding: 10px;
+}
+
+input{
+    text-align: center;
 }
 
 </style>

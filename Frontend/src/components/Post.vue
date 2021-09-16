@@ -12,7 +12,7 @@
           <b-card-img :src="post.attachement" loading="lazy"  alt="Image"  class="mb-2"></b-card-img>
             <div class="social_buton mt-3">
               <b-button href="#" variant="outline-primary"><i class="fas fa-thumbs-up"></i></b-button>
-              <b-button :to="postLink" variant="outline-primary"><i class="far fa-comment-dots"></i></b-button>
+              <b-button :to="postLink" variant="outline-primary"><i class="far fa-comment-dots">{{ post.nbrComment }}</i></b-button>
             </div>
         </a>
       </router-link>

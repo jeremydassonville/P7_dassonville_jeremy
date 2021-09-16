@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Post = require('../models/Post');
 const User = require('../models/User');
 let utils = require('../utils/jwtUtils.js');
 
@@ -50,7 +51,6 @@ exports.login = (req,res) => {
 
 exports.userAccount = (req, res) => {
     let id = utils.getUserId(req.headers.authorization)
-    console.log(id);
     User.findOne({
         attributes: ['id', 'email', 'name', 'surname', 'isAdmin'],
         where: { id: id }
@@ -58,3 +58,55 @@ exports.userAccount = (req, res) => {
         .then(user => res.status(200).json(user))
         .catch(error => res.status(500).json(error))
 };
+
+exports.modifyAccount = (req,res) => {
+
+    let id = utils.getUserId(req.headers.authorization);
+    User.findOne({
+        attributes: ['id', 'email', 'name', 'surname'],
+        where: {id: id}
+    })
+    .then(() => {
+        User.update(
+            {
+            email: req.body.userEmail,
+            surname: req.body.userSurname,
+            name: req.body.userName,
+            },
+            {
+                where: { id: id}
+            }
+        )
+        .then(newUserInfos => {
+            res.status(200).json(newUserInfos)
+        })
+        .catch(error => console.log(error));
+    })
+    .catch(error => console.log(error))
+};
+
+exports.deleteUserAccount = (req,res) => {
+
+    console.log(req.headers)
+
+    let id = utils.getUserId(req.headers.authorization);
+
+    User.findOne({
+        attributes: ['id'],
+        where: {id: id}
+    })
+    .then(() => {
+        Post.destroy({
+            where: {userId: id}
+        })
+        .then(() => {
+            User.destroy({
+                where: {id: id}
+            })
+            .then(() => res.end())
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error))
+    })
+    .catch(error => console.log(error))
+}

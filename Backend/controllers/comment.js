@@ -1,4 +1,5 @@
 let Comment = require("../models/Comment");
+const Post = require("../models/Post");
 const User = require("../models/User");
 let utils = require('../utils/jwtUtils');
 
@@ -13,7 +14,7 @@ exports.createComment = (req,res) => {
     .then(user => {
         
         const userComment = user.name + ' ' + user.surname
-
+        
         Comment.create({
             auteur: userComment,
             content: req.body.content,
@@ -33,6 +34,7 @@ exports.getAllComments = (req,res) => {
         order: [['createdAt', 'DESC']]
     })
     .then(comments => {
+        console.count(comments)
         if (comments.length > null) {
             res.status(200).json(comments);
         } else {

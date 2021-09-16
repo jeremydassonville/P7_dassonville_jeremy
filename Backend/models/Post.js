@@ -12,8 +12,13 @@ const Post = sequelize.define("Post", {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    nbrComment: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+    }
 });
 
 Comment.belongsTo(Post);
+
 
 module.exports = Post;

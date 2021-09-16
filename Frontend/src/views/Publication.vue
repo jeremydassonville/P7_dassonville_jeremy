@@ -70,6 +70,7 @@ export default {
             attachement: '',
             comment: '',
             allComments: [],
+            amout: '',
         }
     },
     components: {
@@ -183,7 +184,7 @@ export default {
 
 .button__post{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .upload_container{

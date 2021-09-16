@@ -1,5 +1,6 @@
 let Post = require('../models/Post');
 let User = require('../models/User');
+let Comment = require('../models/Comment');
 let utils = require('../utils/jwtUtils');
 const fs = require('fs');
 
@@ -42,6 +43,7 @@ exports.getAllPost = (req, res) => {
         .then(posts => {
             if (posts.length > null) {
                 res.status(200).json(posts)
+                console.log(posts)
             } else {
                 res.status(404).json({ error: 'Pas de post à afficher' })
             }
