@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Post = require('../models/Post');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 let utils = require('../utils/jwtUtils.js');
 
 
@@ -99,12 +100,18 @@ exports.deleteUserAccount = (req,res) => {
         Post.destroy({
             where: {userId: id}
         })
-        .then(() => {
-            User.destroy({
-                where: {id: id}
+        .then(() => {
+            Comment.destroy({
+                where: {userId: id}
             })
-            .then(() => res.end())
-            .catch(error => console.log(error));
+            .then(() => {
+                User.destroy({
+                    where: {id: id}
+                })
+                .then(() => res.end())
+                .catch(error => console.log(error))
+            })
+            .catch(error => console.log(error))
         })
         .catch(error => console.log(error))
     })

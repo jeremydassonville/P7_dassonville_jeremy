@@ -2,6 +2,7 @@ const  Sequelize  = require("sequelize");
 const sequelize = require("../utils/database");
 
 
+
 const Comment = sequelize.define("Comment", {
     id: {
         type: Sequelize.INTEGER,
@@ -17,6 +18,12 @@ const Comment = sequelize.define("Comment", {
         type: Sequelize.STRING,
         allowNull: null,
     },
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+    }
 });
+
+
 
 module.exports = Comment;

@@ -8,17 +8,18 @@ exports.createComment = (req,res) => {
     let id = utils.getUserId(req.headers.authorization)
 
     User.findOne({
-        attributes: ['name', 'surname'],
+        attributes: ['name', 'surname', 'id'],
         where: {id: id}
     })
     .then(user => {
-        
+        console.log(user)
         const userComment = user.name + ' ' + user.surname
         
         Comment.create({
             auteur: userComment,
             content: req.body.content,
             PostId: req.body.postId,
+            userId: user.id,
         })
     })
     .catch(error => res.status(500).json(error));

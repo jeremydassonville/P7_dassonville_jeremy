@@ -1,7 +1,7 @@
 const  Sequelize  = require("sequelize");
 const sequelize = require("../utils/database");
 const Post = require("../models/Post");
-
+const Comment = require("../models/Comment");
 
 const User = sequelize.define("User", {
     id: {
