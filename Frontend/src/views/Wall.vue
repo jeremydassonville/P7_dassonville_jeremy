@@ -28,7 +28,6 @@ export default {
     Post,
   },
   methods: {
-    
   },
   mounted: function() {
     if(localStorage.token == undefined || localStorage.token == null){

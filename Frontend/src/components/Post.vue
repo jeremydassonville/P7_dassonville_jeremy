@@ -11,7 +11,7 @@
         <a>
           <b-card-img :src="post.attachement" loading="lazy"  alt="Image"  class="mb-2"></b-card-img>
             <div class="social_buton mt-3">
-              <b-button href="#" variant="outline-primary"><i class="fas fa-thumbs-up"></i></b-button>
+              <b-button href="#" variant="outline-primary" id="likeButon" @click="likeDislikePost()"><i class="fas fa-thumbs-up">{{ post.nbrLike }}</i></b-button>
               <b-button :to="postLink" variant="outline-primary"><i class="far fa-comment-dots">{{ post.nbrComment }}</i></b-button>
             </div>
         </a>
@@ -26,6 +26,10 @@
 
 import { mapState } from 'vuex';
 
+const axios = require('axios');
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api/'
+})
 
 
 export default {
@@ -48,6 +52,26 @@ export default {
         this.$store.dispatch("getUserInfos");
         this.postLink = '/publication/' + this.post.id;
     },
+  methods: {
+    likeDislikePost() {
+      const like = {
+        userId : this.post.UserId,
+        postId : this.post.id
+      }
+
+      instance.post('/like', like, {
+        headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      })
+      .then(() => {
+        this.$router.go()
+      })
+      .catch(error => console.log(error));
+
+      console.log(like)
+    }
+  }
 }
 </script>
 
@@ -80,6 +104,10 @@ export default {
 .btn-outline-primary:hover{
   background-color: #D15159;
   border-color: #D15159;
+}
+
+i.fas.fa-thumbs-up::before{
+  margin-right: 5px
 }
 
 

@@ -15,6 +15,10 @@ const Post = sequelize.define("Post", {
     nbrComment: {
         type: Sequelize.INTEGER,
         allowNull: true,
+    },
+    nbrLike: {
+        type: Sequelize.INTEGER,
+        defaultValue: '0',
     }
 });
 

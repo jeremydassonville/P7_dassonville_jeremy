@@ -6,11 +6,12 @@ const path = require('path');
 
 const sequelize = require('./utils/database');
 
-sequelize.sync();
+sequelize.sync({alter: true});
 
 const userRoutes = require('./routes/user.js');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
+const likeRoutes = require('./routes/like');
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
+app.use('/api/like', likeRoutes);
 
 
 
