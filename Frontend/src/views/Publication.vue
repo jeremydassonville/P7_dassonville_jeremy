@@ -2,7 +2,7 @@
     <div class="post">
         <Post :post="post" v-bind:key="post.id"/>
 
-        <div class="button__post mt-4" v-if=" userInfos.name === post.User.name && userInfos.surname === post.User.surname" >
+        <div class="button__post mt-4" v-if=" userInfos.name === post.User.name && userInfos.surname === post.User.surname || userInfos.isAdmin == 1" >
             <b-button variant="outline-primary" @click="displayModifyPost()">Modifier</b-button>
             <b-button variant="danger" @click="deletePost()">Supprimer</b-button>
         </div>
@@ -97,6 +97,7 @@ export default {
             })
             .then(response => {
                 this.post = response.data;
+                console.log(response)
             })
             .catch(error => {
                 console.log(error);

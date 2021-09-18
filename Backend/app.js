@@ -6,7 +6,7 @@ const path = require('path');
 
 const sequelize = require('./utils/database');
 
-sequelize.sync({alter: true});
+sequelize.sync();
 
 const userRoutes = require('./routes/user.js');
 const postRoutes = require('./routes/post');

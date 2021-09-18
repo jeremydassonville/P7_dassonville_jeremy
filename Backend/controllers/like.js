@@ -5,19 +5,50 @@ const utils = require('../utils/jwtUtils');
 exports.likeDislikePost = (req,res) => {
 
 const id = utils.getUserId(req.headers.authorization)
+const postId = req.body.postId;
 
-Like.create({
-    postId: req.body.postId,
-    userId: req.body.userId
+console.log(postId);
+
+Like.findOne({
+    where: {
+        userId: id,
+        postId: postId,
+    }
 })
-.then(() => {
-    Post.increment('nbrLike', {
-        where: {id: req.body.postId}
-    })
-    .then(res.status(200).json('post liké !'))
-    .catch(error => console.log(error))
+.then(likeFind => {
+    if(likeFind){
+        Like.destroy({
+            where: {
+                userId: id,
+                postId: postId,
+            }
+        })
+        .then(() => {
+            Post.decrement('nbrLike', {
+                where: {id: postId}
+            })
+            .then(res.status(200).json('like retiré !'))
+            .catch(error => console.log(error))
+        })
+        .catch(error => console.log(error))
+    } else {
+        Like.create({
+            postId: req.body.postId,
+            userId: id
+        })
+        .then(() => {
+            Post.increment('nbrLike', {
+                where: {id: req.body.postId}
+            })
+            .then(res.status(200).json('post liké !'))
+            .catch(error => console.log(error))
+        })
+        .catch(error => console.log(error));
+    }
 })
-.catch(error => console.log(error));
+.catch(error => console.log(error))
+
+
 
 
 }
