@@ -3,12 +3,12 @@ let User = require('../models/User');
 let Comment = require('../models/Comment');
 let utils = require('../utils/jwtUtils');
 const fs = require('fs');
-const { post } = require('../app');
+
 
 exports.create = (req,res) => {
 
-
     let id = utils.getUserId(req.headers.authorization)
+
     User.findOne({
         attributes: ['id', 'email', 'name', 'surname'],
         where: {id: id}
@@ -87,6 +87,7 @@ exports.modifyPost = (req, res) => {
     let postId = req.body.postId;
 
     let id = utils.getUserId(req.headers.authorization);
+    
     User.findOne({
         attributes: ['id', 'email', 'name', 'surname', 'isAdmin'],
         where: { id: id}

@@ -46,16 +46,16 @@ export default {
             this.attachement = e.target.files[0] || e.dataTransfer.files;
         },
         createPost: function(){
+            
             const fd = new FormData();
             fd.append("inputFile", this.attachement);
             fd.append("content", this.content);
-            fd.append("test", 'test valeur');
-
+            fd.append("userId", localStorage.getItem("userId"));
 
             instance.post("post/", fd, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
-                }
+                },
             })
             .then(() => {
                 this.$router.push('/wall');

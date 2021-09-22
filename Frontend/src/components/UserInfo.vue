@@ -47,6 +47,7 @@ export default {
             userEmail: this.userEmail,
             userSurname: this.userSurname,
             userName: this.userName,
+            userId: this.userId,
         }
     },
     computed: {
@@ -60,7 +61,8 @@ export default {
             const userInfos = {
                 userEmail: this.userEmail,
                 userSurname: this.userSurname,
-                userName: this.userName
+                userName: this.userName,
+                userId: this.userId
             }
 
             instance.put("user/", userInfos, {

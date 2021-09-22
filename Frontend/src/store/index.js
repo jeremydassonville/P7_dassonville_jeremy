@@ -14,7 +14,7 @@ export default new Vuex.Store({
   state: {
     status: '',
     user: {
-      userId: -1,
+      userId: '',
       token: '',
     },
     userInfos: {
@@ -52,6 +52,7 @@ export default new Vuex.Store({
           commit('setStatus', '');
           commit('logUser', response.data);
           localStorage.setItem('token',response.data.token)
+          localStorage.setItem('userId',response.data.userId)
           resolve(response);
         })
         .catch(function (error) {
@@ -75,7 +76,8 @@ export default new Vuex.Store({
       });
     },
     getUserInfos: (context) => {
-      instance.get('user/me', {
+      console.log(context)
+      instance.get('user/me',  {
         headers:{
           Authorization: "Bearer " + localStorage.getItem("token")
         }

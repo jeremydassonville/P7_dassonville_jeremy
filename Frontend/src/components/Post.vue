@@ -55,7 +55,7 @@ export default {
   methods: {
     likeDislikePost() {
       const like = {
-        userId : this.post.UserId,
+        postUserId : this.post.UserId,
         postId : this.post.id
       }
 
