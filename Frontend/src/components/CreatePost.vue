@@ -12,7 +12,7 @@
             ></b-form-textarea>
             <input class="mt-3" type="file" @change="onFileChange">
             <div id="preview">
-                <img v-if="attachement" :src="attachement" class="imgPreview">
+                <img v-if="attachement" :src="url" class="imgPreview">
             </div>
             
             
@@ -39,11 +39,13 @@ export default {
         return{
             content: '',
             attachement: '',
+            url: null,
         }
     },
     methods: {
         onFileChange: function(e) {
-            this.attachement = e.target.files[0] || e.dataTransfer.files;
+            this.attachement = e.target.files[0];
+            this.url = URL.createObjectURL(this.attachement)
         },
         createPost: function(){
             
