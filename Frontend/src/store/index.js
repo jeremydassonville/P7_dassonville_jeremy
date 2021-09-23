@@ -21,6 +21,7 @@ export default new Vuex.Store({
       email: '',
       name: '',
       surname: '',
+      userId: '',
       isAdmin: '',
     },
   },
@@ -31,11 +32,12 @@ export default new Vuex.Store({
     logUser: function(state,user){
       state.user = user;
     },
-    saveUserInfos: function(state, [email, name, surname, isAdmin]) {
+    saveUserInfos: function(state, [email, name, surname, userId, isAdmin]) {
       state.userInfos.email = email;
       state.userInfos.name = name;
       state.userInfos.surname = surname;
       state.userInfos.isAdmin = isAdmin;
+      state.userInfos.userId = userId;
     },
     createPost: function(state, [content, attachement]) {
       state.contentPost.content = content;
@@ -83,7 +85,7 @@ export default new Vuex.Store({
         }
       })
       .then(response =>{
-        context.commit('saveUserInfos',[response.data.email, response.data.name, response.data.surname, response.data.isAdmin])
+        context.commit('saveUserInfos',[response.data.email, response.data.name, response.data.surname, response.data.id, response.data.isAdmin])
       })
       .catch(error =>{
         console.log(error)

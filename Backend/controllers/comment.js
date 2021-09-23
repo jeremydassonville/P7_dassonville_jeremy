@@ -12,7 +12,6 @@ exports.createComment = (req,res) => {
         where: {id: id}
     })
     .then(user => {
-        console.log(user)
         const userComment = user.name + ' ' + user.surname
         
         Comment.create({
@@ -30,12 +29,11 @@ exports.getAllComments = (req,res) => {
     let id = req.query.id;
 
     Comment.findAll({
-        attributes: ['auteur', 'content', 'createdAt'],
+        attributes: ['auteur', 'content', 'userId', 'id', 'createdAt'],
         where: {PostId: id},
         order: [['createdAt', 'DESC']]
     })
     .then(comments => {
-        console.count(comments)
         if (comments.length > null) {
             res.status(200).json(comments);
         } else {
@@ -43,4 +41,27 @@ exports.getAllComments = (req,res) => {
         }
     })
     .catch(error => res.status(500).json(error));
+}
+
+exports.deleteComment = (req,res) => {
+
+    const id = utils.getUserId(req.headers.authorization)
+
+    User.findOne({
+        where: {id: id}
+    })
+    .then(user => {
+        if(user.id == req.query.commentUserId || user.isAdmin == true){
+            Comment.destroy({
+                where: {id: req.query.commentId}
+            })
+            .then(() => res.end())
+            .catch(error => res.status(500).json(error))
+        } else {
+            res.status(401).json('utilisateur non authorisé à supprimer !')
+        }
+    })
+    .catch(error => res.status(500).json(error))
+
+
 }
