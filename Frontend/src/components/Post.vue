@@ -58,18 +58,22 @@ export default {
         postUserId : this.post.UserId,
         postId : this.post.id
       }
-
       instance.post('/like', like, {
         headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
         }
       })
       .then(() => {
-        this.$router.go()
+        const postId = this.post.id
+        instance.get('/like/:id', {
+          params: {
+            postId: postId
+          }
+        })
+        .then(response => this.post.nbrLike = response.data.nbrLike)
+        .catch(error => console.log(error));
       })
       .catch(error => console.log(error));
-
-      console.log(like)
     }
   }
 }

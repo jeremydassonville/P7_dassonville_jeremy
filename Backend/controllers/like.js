@@ -47,8 +47,19 @@ Like.findOne({
     }
 })
 .catch(error => console.log(error))
+}
 
+exports.getNbrLike = (req,res) => {
 
-
+    const postId = req.query.postId
+    
+    Post.findOne({
+        where: {id : postId},
+        attributes: ['nbrLike']
+    })
+    .then(nbrFind => {
+        res.status(200).json(nbrFind);
+    })
+    .catch(error => console.log(error))
 
 }
