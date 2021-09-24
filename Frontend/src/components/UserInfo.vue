@@ -23,7 +23,13 @@
 
         <div class="button__account mt-3">
             <b-button variant="outline-primary" @click="modifyUserInfos()">Modifier vos informations</b-button>
-            <b-button variant="danger" @click="deleteUserAccount()">Supprimer votre compte</b-button>
+            <div>
+                <b-button v-b-modal.modal-1 variant="danger" >Supprimer votre compte</b-button>
+                    <b-modal id="modal-1" title="Supprimer votre compte?" hide-footer>
+                        <p class="my-4">Êtes vous sûr de vouloir supprimer votre compte?</p>
+                        <b-button variant="danger" @click="deleteUserAccount()">Confirmer</b-button>
+                </b-modal>
+            </div>
         </div>   
         </b-card>
     </div>
