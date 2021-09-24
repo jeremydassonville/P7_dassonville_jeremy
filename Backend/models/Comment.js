@@ -21,6 +21,10 @@ const Comment = sequelize.define("Comment", {
     userId: {
         type: Sequelize.INTEGER,
         allowNull: true,
+    },
+    createdAt: {
+        type: Sequelize.DataTypes.DATEONLY,
+        allowNull: false,
     }
 });
 
