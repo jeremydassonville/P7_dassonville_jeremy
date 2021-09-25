@@ -1,18 +1,18 @@
 <template>
 <div>
   <div class="mt-3 mb-2 container_top">
-    <div class="userInfo">
-    <p id="userPostInfo">{{ post.User.name }} {{ post.User.surname }}</p>
-    <h2>{{post.content}}</h2>
-    </div>
   </div>
-    <b-card class="mb-2 mx-auto card_container">
+    <b-card class="mb-2 mx-auto card_container shadow-sm p-3 mb-5 bg-white rounded">
+      <div class="userInfo">
+        <h5 id="userPostInfo">{{ post.User.name }} {{ post.User.surname }}</h5>
+        <p>{{post.content}}</p>
+    </div>
       <router-link :to="postLink">
         <a>
           <b-card-img :src="post.attachement" loading="lazy"  alt="Image"  class="mb-2"></b-card-img>
             <div class="social_buton mt-3">
-              <b-button href="#" variant="outline-primary" id="likeButon" @click="likeDislikePost()"><i class="fas fa-thumbs-up">{{ post.nbrLike }}</i></b-button>
-              <b-button :to="postLink" variant="outline-primary"><i class="far fa-comment-dots">{{ post.nbrComment }}</i></b-button>
+              <b-button href="#" variant="secondary" id="likeButon"  @click="likeDislikePost()"><i class="fas fa-thumbs-up">{{ post.nbrLike }}</i></b-button>
+              <b-button :to="postLink" variant="secondary"><i class="far fa-comment-dots">{{ post.nbrComment }}</i></b-button>
             </div>
         </a>
       </router-link>
@@ -88,24 +88,23 @@ export default {
 
 .social_buton{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .card_container{
   max-width: 40rem;
 }
 
-.userInfo{
-  display: flex;
-  align-items: baseline;
-}
+.userInfo h5 {
+  text-align: left;
+} 
 
 #userPostInfo{
   margin-right: 10px;
   font-size: 12px;
 }
 
-.btn-outline-primary:hover{
+.btn-secondary:hover{
   background-color: #D15159;
   border-color: #D15159;
 }

@@ -7,7 +7,7 @@
             <div class="userInfos">
                 <div>
                     <h3>Email:</h3> 
-                    <b-form-input v-model="userEmail" :placeholder="userInfos.email" id="cardUserInfo"></b-form-input>
+                    <b-form-input v-model="userEmail"  :placeholder="userInfos.email" id="cardUserInfo"></b-form-input>
                 </div>
                 <div>
                     <h3>Nom:</h3> 
@@ -18,9 +18,6 @@
                     <b-form-input v-model="userName" :placeholder="userInfos.name" id="cardUserInfo"></b-form-input> 
                 </div>
             </div>
-
-            
-
         <div class="button__account mt-3">
             <b-button variant="outline-primary" @click="modifyUserInfos()">Modifier vos informations</b-button>
             <div>

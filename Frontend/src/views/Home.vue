@@ -87,7 +87,8 @@ export default {
 <style scoped>
 
 .card__container{
-    margin: 150px auto;
+    margin: 0 auto;
+    margin-top: 150px;
 }
 
 .switchCreateAccount{
@@ -95,6 +96,5 @@ export default {
     text-decoration: underline;
     cursor: pointer;
 }
-
 
 </style>

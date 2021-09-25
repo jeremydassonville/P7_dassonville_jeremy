@@ -54,7 +54,10 @@ export default {
             fd.append("content", this.content);
             fd.append("userId", localStorage.getItem("userId"));
 
-            instance.post("post/", fd, {
+            if(!this.content) {
+                alert('pas de titre ! ');
+            } else {
+                instance.post("post/", fd, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 },
@@ -62,7 +65,9 @@ export default {
             .then(() => {
                 this.$router.push('/wall');
             }) 
-            .catch()
+            .catch(error => console.log(error));
+            }
+            
         }
     },
 }
@@ -81,6 +86,14 @@ export default {
     margin-top: 20px;
 }
 
+button{
+  background-color: #D15159;
+  border: none;
+}
+
+button:hover{
+    background-color: #e4666f;
+}
 
 
 </style>

@@ -2,20 +2,22 @@
   <div id="app">
 
   <div>
-    <b-navbar class="nav" type="dark">
+    <b-navbar class="nav" type="light">
       <b-navbar-nav>
-        <b-navbar-brand to="/wall">Groupomania</b-navbar-brand>
+        <b-navbar-brand to="/wall">
+          <img src="./assets/icon-left-font.jpg" id="logo_groupomania">
+        </b-navbar-brand>
         
         <!-- Navbar dropdowns -->
         <b-nav-item-dropdown text="Utilisateur" right>
           <b-dropdown-item to="/account">Compte</b-dropdown-item>
           <b-dropdown-item @click="disconnectUser()" to="/">deconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
-        
-        <b-nav-item id="uploadButton" v-if="test == 0">
+          
+        <b-nav-item id="uploadButton" >
           <b-button to="/upload" variant="primary">Publier</b-button>
         </b-nav-item>
-
+        
       </b-navbar-nav>
     </b-navbar>
   </div>
@@ -25,11 +27,6 @@
 
 <script>
 export default {
-  data: function () {
-    return{
-      test: 0
-    }
-  },
   methods: {
     disconnectUser: function() {
       localStorage.clear();
@@ -45,7 +42,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+
 }
 
 #nav {
@@ -61,18 +58,39 @@ export default {
   color: #42b983;
 }
 
-#uploadButton{
-  position: absolute;
-  right: 0;
-  top: 0;
+nav.navbar{
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-nav{
+  display: flex;
+  align-items: baseline;
+}
+
+a.btn.btn-primary{
+  background-color: #D15159;
+  border: none;
+}
+a.btn.btn-primary:hover{
+  background-color: #e4666f;
 }
 
 .nav{
-  background-color: #081E43;
+  background-color: #FEFFFE;
 }
 
-#test{
-  background-color: #D15159;
+html, #app{
+  background-color: #ebebeb;
+  
 }
+
+#logo_groupomania {
+  width: 300px;
+  height: 60px;
+  object-fit: cover;
+}
+
+
 
 </style>

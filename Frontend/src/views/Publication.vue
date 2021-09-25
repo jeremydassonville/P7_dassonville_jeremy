@@ -6,14 +6,6 @@
             <b-button variant="outline-primary" @click="displayModifyPost()">Modifier</b-button>
             <b-button variant="danger" @click="deletePost()">Supprimer</b-button>
         </div>
-        <div class="commentSection">
-        <b-form-textarea
-            id="textarea" v-model="comment" placeholder="Ajouter un commentaire..." rows="3" max-rows="6" class="mx-auto mt-5"></b-form-textarea>
-            <b-button class="mt-2" type="submit" variant="primary" @click="postComment()">Publier</b-button>
-        </div>
-
-        <Comment v-for="comment in allComments" v-bind:key="comment.id" :comment="comment" />
-
         <div class="upload_container" v-if="displayModification">
             <h1>Modifier votre publication</h1><br>
             <div class="card__container w-50 mx-auto">
@@ -31,25 +23,25 @@
                     </div>
                     <b-button class="mt-3" type="submit" variant="primary" @click="modifyPost()">Modifier</b-button>
                 </b-card>
+            </div>        
         </div>
-</div>
+        <div class="commentSection" v-if="!displayModification">
+            <b-form-textarea
+            id="textarea" v-model="comment" placeholder="Ajouter un commentaire..." rows="3" max-rows="6" class="mx-auto mt-5 shadow-sm p-3 mb-2 rounded"></b-form-textarea>
+            <b-button class="mt-2 mb-2" type="submit" variant="primary" @click="postComment()">Publier</b-button>
+        </div>
 
-
+        <Comment v-for="comment in allComments" v-bind:key="comment.id" :comment="comment" />
+        
+        
     </div>
 </template>
-
-
-
 
 <script>
 
 import Post from '@/components/Post.vue'
 import Comment from '@/components/Comment.vue'
 import { mapState } from 'vuex';
-
-
-
-
 
 const axios = require('axios');
 const instance = axios.create({
@@ -167,12 +159,19 @@ export default {
                 content: this.comment,
                 postId: this.$route.params.id,
             }
-            instance.post('comment/', comment, {
+            if(!comment.content) {
+                alert('votre commentaire est vide !')
+            } else {
+                instance.post('comment/', comment, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 } 
             })
-            this.$router.go();
+            .then(() => {
+                this.$router.go();
+            })
+            .catch(error => console.log(error));
+            }
         },
     },
 }

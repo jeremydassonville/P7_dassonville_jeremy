@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-card class=" mx-auto commentContainer">
+  <b-card class=" mx-auto commentContainer shadow-sm p-3 mb-3  bg-white rounded">
       <span id="deleteCom" @click="deleteComment()" v-if="this.userInfos.userId === this.comment.userId || this.userInfos.isAdmin == true">x</span>
       <div class="commentTitle">
         <h4>{{comment.auteur}}</h4>

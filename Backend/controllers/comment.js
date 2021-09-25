@@ -5,6 +5,8 @@ let utils = require('../utils/jwtUtils');
 
 exports.createComment = (req,res) => {
 
+    console.log(req);
+
     let id = utils.getUserId(req.headers.authorization)
 
     User.findOne({
@@ -13,13 +15,14 @@ exports.createComment = (req,res) => {
     })
     .then(user => {
         const userComment = user.name + ' ' + user.surname
-        
         Comment.create({
             auteur: userComment,
             content: req.body.content,
             PostId: req.body.postId,
             userId: user.id,
         })
+        .then(res.status(201).end())
+        .catch(error => res.status(500).json(error))
     })
     .catch(error => res.status(500).json(error));
 }
