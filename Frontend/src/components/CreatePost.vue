@@ -54,8 +54,8 @@ export default {
             fd.append("content", this.content);
             fd.append("userId", localStorage.getItem("userId"));
 
-            if(!this.content) {
-                alert('pas de titre ! ');
+            if(!this.attachement) {
+                alert("vous n'avez pas ajouté d'image !");
             } else {
                 instance.post("post/", fd, {
                 headers: {

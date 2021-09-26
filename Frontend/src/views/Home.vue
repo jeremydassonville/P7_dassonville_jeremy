@@ -60,13 +60,18 @@ export default {
         },
         login: function() {
             const self = this;
-            this.$store.dispatch('login', {
+            if(this.email == '' || this.password == ''){
+                alert("nom d'utilisateur ou mot de passe incorect !")
+            } else {
+                this.$store.dispatch('login', {
                 email: this.email, 
                 password: this.password,
-            })
-            .then(() => {
-                self.$router.push('/wall'); 
-            })
+                })
+                .then(() => {
+                    self.$router.push('/wall'); 
+                })
+                .catch(() => alert('utilisateur non trouvé !'));
+            }  
         },
         createAccount: function() {
             const self = this;

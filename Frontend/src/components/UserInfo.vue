@@ -68,7 +68,10 @@ export default {
                 userId: this.userId
             }
 
-            instance.put("user/", userInfos, {
+            if(userInfos.userEmail == undefined && userInfos.userSurname == undefined && userInfos.userName == undefined && userInfos.userId == undefined){
+                alert("Vous n'avez pas rempli de modification !")
+            } else {
+                instance.put("user/", userInfos, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
@@ -77,6 +80,7 @@ export default {
                 this.$router.go();
             })
             .catch(error => console.log(error));
+            }            
         },
         deleteUserAccount() {
             instance.delete("user/",
