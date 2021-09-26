@@ -9,7 +9,7 @@
         </b-navbar-brand>
         
         <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="Utilisateur" right v-if="this.$route.path != '/' ">
+        <b-nav-item-dropdown text="Utilisateur" right>
           <b-dropdown-item to="/account">Compte</b-dropdown-item>
           <b-dropdown-item @click="disconnectUser()" to="/">deconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
