@@ -113,5 +113,8 @@ i.fas.fa-thumbs-up::before{
   margin-right: 5px
 }
 
+.card-body{
+  padding: 0rem 0rem;
+}
 
 </style>

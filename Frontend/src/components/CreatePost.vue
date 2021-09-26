@@ -1,7 +1,7 @@
 <template>
 <div class="upload_container">
     <h1>Créer votre publication</h1><br>
-    <div class="card__container w-50 mx-auto">
+    <div class="card_container w-50 mx-auto">
         <b-card class="shadow p-3 mb-5 bg-white rounded">
             <b-form-textarea
                 id="textarea"
@@ -78,11 +78,11 @@ export default {
 <style scoped>
 
 .upload_container{
-    margin-top: 150px;
+    margin-top: 100px;
 }
 
 .imgPreview{
-    max-width: 500px;
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -95,5 +95,10 @@ button:hover{
     background-color: #e4666f;
 }
 
+@media screen and (max-width: 700px) {
+    .card_container{
+        width: 100%!important;
+    }
+}
 
 </style>

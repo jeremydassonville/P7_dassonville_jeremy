@@ -9,12 +9,12 @@
         </b-navbar-brand>
         
         <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="Utilisateur" right>
+        <b-nav-item-dropdown text="Utilisateur" right v-if="this.$route.path != '/' ">
           <b-dropdown-item to="/account">Compte</b-dropdown-item>
           <b-dropdown-item @click="disconnectUser()" to="/">deconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
           
-        <b-nav-item id="uploadButton" >
+        <b-nav-item id="uploadButton" v-if="this.$route.path != '/' ">
           <b-button to="/upload" variant="primary">Publier</b-button>
         </b-nav-item>
         
@@ -31,8 +31,10 @@ export default {
     disconnectUser: function() {
       localStorage.clear();
     }
-
-  }
+  },
+  mounted() {
+    console.log(this.$route.path);
+  },
 }
 </script>
 
@@ -65,6 +67,8 @@ nav.navbar{
 
 .navbar-nav{
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: baseline;
 }
 

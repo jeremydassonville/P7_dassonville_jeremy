@@ -20,7 +20,7 @@ export default {
   name: 'Wall',
   data() {
     return {
-      allPosts: []
+      allPosts: [],
     }
   },
   

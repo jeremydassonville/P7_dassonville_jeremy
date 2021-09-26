@@ -3,12 +3,12 @@
         <Post :post="post" v-bind:key="post.id"/>
 
         <div class="button__post mt-4" v-if=" userInfos.name === post.User.name && userInfos.surname === post.User.surname || userInfos.isAdmin == 1" >
-            <b-button variant="outline-primary" @click="displayModifyPost()">Modifier</b-button>
+            <b-button variant="primary" @click="displayModifyPost()">Modifier</b-button>
             <b-button variant="danger" @click="deletePost()">Supprimer</b-button>
         </div>
         <div class="upload_container" v-if="displayModification">
             <h1>Modifier votre publication</h1><br>
-            <div class="card__container w-50 mx-auto">
+            <div class="card_container w-50 mx-auto">
                 <b-card class="shadow p-3 mb-5 bg-white rounded">
                     <b-form-textarea
                         id="textarea"
@@ -27,7 +27,7 @@
         </div>
         <div class="commentSection" v-if="!displayModification">
             <b-form-textarea
-            id="textarea" v-model="comment" placeholder="Ajouter un commentaire..." rows="3" max-rows="6" class="mx-auto mt-5 shadow-sm p-3 mb-2 rounded"></b-form-textarea>
+            id="commentArea" v-model="comment" placeholder="Ajouter un commentaire..." rows="3" max-rows="6" class="mx-auto mt-5 shadow-sm p-3 mb-2 rounded"></b-form-textarea>
             <b-button class="mt-2 mb-2" type="submit" variant="primary" @click="postComment()">Publier</b-button>
         </div>
 
@@ -190,8 +190,14 @@ export default {
     margin-top: 50px;
 }
 
-.form-control{
+#commentArea{
     width: 640px;
+}
+
+@media screen and (max-width: 700px) {
+    .card_container{
+        width: 100%!important;
+    }
 }
 
 </style>

@@ -19,9 +19,9 @@
                 </div>
             </div>
         <div class="button__account mt-3">
-            <b-button variant="outline-primary" @click="modifyUserInfos()">Modifier vos informations</b-button>
+            <b-button variant="primary" @click="modifyUserInfos()">Modifier</b-button>
             <div>
-                <b-button v-b-modal.modal-1 variant="danger" >Supprimer votre compte</b-button>
+                <b-button v-b-modal.modal-1 variant="danger" id="deleteButton" >Supprimer votre compte</b-button>
                     <b-modal id="modal-1" title="Supprimer votre compte?" hide-footer>
                         <p class="my-4">Êtes vous sûr de vouloir supprimer votre compte?</p>
                         <b-button variant="danger" @click="deleteUserAccount()">Confirmer</b-button>
@@ -121,6 +121,15 @@ h3{
 
 input{
     text-align: center;
+}
+
+@media screen and (max-width: 1000px){
+    .card {
+        width: 100%!important;
+    }
+    #deleteButton{
+        width: 110px;
+    }
 }
 
 </style>
