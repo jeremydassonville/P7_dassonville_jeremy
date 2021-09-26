@@ -5,19 +5,5 @@
     "database": "groupomania_OC",
     "host": "localhost",
     "dialect": "mysql"
-  },
-  "test": {
-    "username": "jeremy",
-    "password": "FTKN84N3T4",
-    "database": "groupomania_OC",
-    "host": "localhost",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "jeremy",
-    "password": "FTKN84N3T4",
-    "database": "groupomania_OC",
-    "host": "localhost",
-    "dialect": "mysql"
   }
 }
