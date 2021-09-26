@@ -61,7 +61,6 @@ exports.userAccount = (req, res) => {
 };
 
 exports.modifyAccount = (req,res) => {
-
     let id = utils.getUserId(req.headers.authorization);
     User.findOne({
         attributes: ['id', 'email', 'name', 'surname'],
@@ -81,17 +80,13 @@ exports.modifyAccount = (req,res) => {
         .then(newUserInfos => {
             res.status(200).json(newUserInfos)
         })
-        .catch(error => console.log(error));
+        .catch(error => res.status(400).json({ error }))
     })
-    .catch(error => console.log(error))
+    .catch(error => res.status(400).json({ error }))
 };
 
 exports.deleteUserAccount = (req,res) => {
-
-    console.log(req.headers)
-
     let id = utils.getUserId(req.headers.authorization);
-
     User.findOne({
         attributes: ['id'],
         where: {id: id}
@@ -108,12 +103,12 @@ exports.deleteUserAccount = (req,res) => {
                 User.destroy({
                     where: {id: id}
                 })
-                .then(() => res.end())
-                .catch(error => console.log(error))
+                .then(() => res.status(200).json({message: 'Compte supprimé !'}))
+                .catch(error => res.status(400).json({ error }))
             })
-            .catch(error => console.log(error))
+            .catch(error => res.status(400).json({ error }))
         })
-        .catch(error => console.log(error))
+        .catch(error => res.status(400).json({ error }))
     })
-    .catch(error => console.log(error))
+    .catch(error => res.status(400).json({ error }))
 }

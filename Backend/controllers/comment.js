@@ -24,7 +24,7 @@ exports.createComment = (req,res) => {
         .then(res.status(201).end())
         .catch(error => res.status(500).json(error))
     })
-    .catch(error => res.status(500).json(error));
+    .catch(error => res.status(500).json({ error }));
 }
 
 exports.getAllComments = (req,res) => {
@@ -43,7 +43,7 @@ exports.getAllComments = (req,res) => {
             res.status(404).json({error: 'Pas de commentaire à afficher'});
         }
     })
-    .catch(error => res.status(500).json(error));
+    .catch(error => res.status(500).json({ error }));
 }
 
 exports.deleteComment = (req,res) => {
@@ -58,13 +58,13 @@ exports.deleteComment = (req,res) => {
             Comment.destroy({
                 where: {id: req.query.commentId}
             })
-            .then(() => res.end())
-            .catch(error => res.status(500).json(error))
+            .then(() => res.status(200).json({ message: 'Commentaire supprimé ! '}))
+            .catch(error => res.status(500).json({ error }))
         } else {
             res.status(401).json('utilisateur non authorisé à supprimer !')
         }
     })
-    .catch(error => res.status(500).json(error))
+    .catch(error => res.status(500).json({ error }))
 
 
 }

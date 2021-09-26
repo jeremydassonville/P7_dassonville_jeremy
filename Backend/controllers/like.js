@@ -28,9 +28,9 @@ Like.findOne({
                 where: {id: postId}
             })
             .then(res.status(200).json('like retiré !'))
-            .catch(error => console.log(error))
+            .catch(error => res.status(400).json({ error }));
         })
-        .catch(error => console.log(error))
+        .catch(error => res.status(400).json({ error }));
     } else {
         Like.create({
             postId: req.body.postId,
@@ -41,12 +41,12 @@ Like.findOne({
                 where: {id: req.body.postId}
             })
             .then(res.status(200).json('post liké !'))
-            .catch(error => console.log(error))
+            .catch(error => res.status(400).json({ error }));
         })
-        .catch(error => console.log(error));
+        .catch(error => res.status(400).json({ error }));
     }
 })
-.catch(error => console.log(error))
+.catch(error => res.status(400).json({ error }))
 }
 
 exports.getNbrLike = (req,res) => {
@@ -60,6 +60,6 @@ exports.getNbrLike = (req,res) => {
     .then(nbrFind => {
         res.status(200).json(nbrFind);
     })
-    .catch(error => console.log(error))
+    .catch(error => res.status(400).json({ error }))
 
 }

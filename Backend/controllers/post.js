@@ -26,11 +26,9 @@ exports.create = (req,res) => {
         .then((newPost) => {
             res.status(201).json(newPost)
         })
-        .catch((err) => {
-            res.status(500).json(err)
-        })
+        .catch(error => res.status(400).json({ error }));
     })
-    .catch(error => res.status(500).json(error));
+    .catch(error => res.status(500).json({ error }));
 }
 
 exports.getAllPost = (req, res) => {
@@ -44,12 +42,11 @@ exports.getAllPost = (req, res) => {
         .then(posts => {
             if (posts.length > null) {
                 res.status(200).json(posts)
-                console.log(posts)
             } else {
-                res.status(404).json({ error: 'Pas de post à afficher' })
+                res.status(400).json({ error: 'Pas de post à afficher' })
             }
         })
-        .catch(error => res.status(500).json(error));
+        .catch(error => res.status(500).json({ error }));
 }
 
 exports.getOnePost = (req, res) => {
@@ -73,10 +70,10 @@ exports.getOnePost = (req, res) => {
             }
             res.status(200).json(postComplet);
         })
-        .catch(error => res.status(500).json(error));
+        .catch(error => res.status(400).json({ error }))
         
     }) 
-    .catch(error => res.status(500).json(error));
+    .catch(error => res.status(500).json({ error }));
 
 }
 
@@ -107,7 +104,7 @@ exports.modifyPost = (req, res) => {
                 .then((newPost) => {
                     res.status(200).json(newPost)
                 })
-                .catch(error => console.log(error))
+                .catch(error => res.status(400).json({ error }))
             } else {
                 Post.update({
                     content: req.body.content,
@@ -119,7 +116,7 @@ exports.modifyPost = (req, res) => {
             .then((newPost) => {
                 res.status(200).json(newPost)
             })
-            .catch(error => res.status(500).json(error))
+            .catch(error => res.status(400).json({ error }))
             }
             
         }
@@ -131,7 +128,6 @@ exports.modifyPost = (req, res) => {
 };
 
 exports.deletePost = (req, res) => {
-    let userOder = req.body.userIdOrder;
 
     let id = utils.getUserId(req.headers.authorization)
     User.findOne({
@@ -139,13 +135,11 @@ exports.deletePost = (req, res) => {
         where: { id: id }
     })
     .then(user => {       
-        console.log(user)
+
         Post.findOne({
            where: { id: req.body.postId }
         })
         .then((postFind) => {
-            console.log(postFind)
-            console.log(id);
             if(id == postFind.UserId || user.isAdmin == true){
                 const filename = postFind.attachement.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
@@ -153,13 +147,13 @@ exports.deletePost = (req, res) => {
                         where: { id: postFind.id }
                         })
                         .then(() => res.end())
-                        .catch(err => res.status(500).json(err))
+                        .catch(error => res.status(400).json({ error }))
                 })
             } else {
                 res.status(403).json('Utilisateur non autorisé à supprimer ce post');
             }       
         })
-        .catch(err => res.status(500).json(err))
+        .catch(error => res.status(400).json({ error }))
     })
-    .catch()
+    .catch(error => res.status(400).json({ error }))
 }
