@@ -9,7 +9,7 @@ Créer ensuite un nouvel utilisateur avec la commande `CREATE USER 'nom user'@'l
 
 Donner les droits au nouvel utilisateur avec la commande `GRANT ALL PRIVILEGES ON groupomania_OC.* TO 'nom user'@'localhost';`
 
-Vérifiez les identifiants dans le fichier config.json du dossier Backend puis importer le fichier groupomania.sql
+Remplacer les identifiants dans le fichier config.json du dossier Backend puis importer le fichier groupomania.sql
 
     mysql -u 'nom user' -p groupomania_OC < groupomania.sql
 
