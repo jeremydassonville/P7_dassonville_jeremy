@@ -1,24 +1,31 @@
 # groupomania
 
-## Project setup
-```
-npm install
-```
+Création d'un réseau social d'entreprise
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Frontend
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Ouvrir le dossier Frontend dans le terminal de votre éditeur puis exécuter la commande:
 
-### Lints and fixes files
-```
-npm run lint
-```
+    npm install
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+puis
+
+    npm run serve
+
+si le navigateur ne s'ouvre pas automatiquement allez à :
+
+- http://localhost:8080/
+
+## Backend
+
+Ouvrir le dossier Backend dans le terminal de votre éditeur puis exécuter la commande:
+
+    npm install
+
+puis
+
+    nodemon server
+
+## Base de donnée
+
+
