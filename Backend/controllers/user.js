@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const emailValidator = require('email-validator');
 const Post = require('../models/Post');
 const User = require('../models/User');
 const Comment = require('../models/Comment');
@@ -7,6 +8,7 @@ let utils = require('../utils/jwtUtils.js');
 
 
 exports.signup = (req, res) => {
+
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User ({
@@ -16,9 +18,13 @@ exports.signup = (req, res) => {
                 password: hash,
                 isAdmin : false,
             });
-            user.save()
+            if(!emailValidator.validate(user.email)){
+                res.status(400).json({message: 'adresse email invalide !'})
+            } else {
+                user.save()
                 .then(() => res.status(201).json({message: 'Utilisateur crée !' }))
                 .catch(error => res.status(400).json({ error }));
+            } 
         })
     .catch(error => res.status(500).json({ error }));
 };

@@ -75,7 +75,11 @@ export default {
         },
         createAccount: function() {
             const self = this;
-            this.$store.dispatch('createAccount', {
+            const emailValidator = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!this.email.match(emailValidator)){
+                alert("Votre adresse mail n'est pas correcte !")
+            } else {
+                this.$store.dispatch('createAccount', {
                 email: this.email,
                 name: this.name,
                 surname: this.surname,
@@ -84,6 +88,8 @@ export default {
             .then(() => {
               self.login();  
             })
+            .catch(() => alert('Mot de passe requis : 8 caractères minimun. Au moins 1 Majuscule, 1 minuscule, 2 chiffres, sans espaces'));
+            }
         },
     },
 }
