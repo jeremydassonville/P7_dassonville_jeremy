@@ -38,3 +38,5 @@ puis
 
     nodemon server
 
+un compte administrateur est déjà créer.
+Vous retrouverez les identifiants de connexion dans le dossier config/admin.js
