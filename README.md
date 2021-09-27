@@ -38,3 +38,4 @@ puis
 
     nodemon server
 
+un compte administrateur est déjà créer dans le dossier config/admin.js
